@@ -4,6 +4,8 @@ import { fromJS, List } from "immutable";
 
 export default {
     newTicket: (state, action) => {
+
+        // let copy = _.cloneDeep(state)
         let ticketToAdd = {}
 
         if (action.ticket && action.ticketStatus && state.getIn(["tickets", action.ticketStatus])) {
@@ -11,18 +13,19 @@ export default {
             ticketToAdd["content"] = action.ticket
         }
 
-        return state.updateIn(["tickets", action.ticketStatus], List(), list => list.push(fromJS(ticketToAdd)))
+        return state.updateIn(["tickets", "backlog"], List(), list => list.push(fromJS(ticketToAdd)))
 
     },
 
     deleteTicket: (state, action) => {
 
         if (action.ticketId) {
+            debugger
             return state.updateIn(
                 ["tickets"],
                 List(),
                 list => {
-                    let updatedTickets = Object.fromEntries(
+                    let x = Object.fromEntries(
                         Object.entries(list.toJS()).map(([key, categoryTickets]) =>
                             [
                                 key, categoryTickets.filter((ticket) => {
@@ -31,7 +34,8 @@ export default {
                             ]
                         )
                     )
-                    return fromJS(updatedTickets)
+                    console.log(x)
+                    return fromJS(x)
                 })
         }
 

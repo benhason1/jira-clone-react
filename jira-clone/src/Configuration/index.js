@@ -3,3 +3,4 @@ export default {
     reduxTicketInitialState: { tickets: { backlog: [], inProgress: [], done: [] } },
     jwtSecret: "123456"
 }
+    

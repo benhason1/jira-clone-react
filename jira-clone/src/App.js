@@ -5,9 +5,9 @@ import { useSelector, connect } from 'react-redux'
 import { bindActionCreators } from "redux";
 import Board from './Containers/Board'
 import AddTicket from './Containers/AddTicket'
+import { isAuthenticated } from "./Services/AuthServices";
 
 export default function App(props) {
-
 
   return (
     <div className="App">
