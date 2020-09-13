@@ -1,5 +1,6 @@
 import reducerFactory from '../../ReducerFactory'
 import UsersHandlers from './UsersHandlers';
+import { fromJS } from 'immutable'
 
 const actions = {
     NEW: 'newUser',
@@ -9,4 +10,4 @@ const actions = {
 const handlers = {}
 handlers[actions.NEW] = UsersHandlers.newUser
 
-export default reducerFactory({ users: [] }, handlers)
+export default reducerFactory(fromJS({ users: [] }), handlers)

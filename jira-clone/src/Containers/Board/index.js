@@ -2,24 +2,12 @@ import React, { useEffect } from 'react'
 import Category from '../../Components/Category'
 import { Paper, Grid } from '@material-ui/core';
 import { connect, useSelector } from 'react-redux'
+import withImmutablePropsToJS from 'with-immutable-props-to-js'
 
 const Board = (props) => {
     const { backlog, inProgress, done } = props
 
-    // const backlog = useSelector(state => state.Tickets.tickets.backlog)
-    // const inProgress = useSelector(state => state.Tickets.tickets.inProgress)
-    // const done = useSelector(state => state.Tickets.tickets.done)
-
-    // useEffect(() => {
-    //     const currentBacklog = backlog
-    //     const currentInProgress = props.inProgress
-    //     const currentDone = props.done
-    //     dispatch({
-
-    //     })
-    // }, [backlog, inProgress, done])
-
-    // const users = useSelector(state => state.Users)
+    console.log("props:",props)
 
     return (
         <Paper>
@@ -30,14 +18,13 @@ const Board = (props) => {
     )
 }
 
-// export default Board;
 
 const mapStateToProps = state => {
     return {
-        backlog: state.Tickets.tickets.backlog,
-        inProgress: state.Tickets.tickets.inProgress,
-        done: state.Tickets.tickets.done
+        backlog: state.getIn(["tickets", "backlog"]),
+        inProgress: state.getIn(["tickets", "inProgress"]),
+        done: state.getIn(["tickets", "done"])
     };
 };
 
-export default connect(mapStateToProps)(Board);
+export default connect(mapStateToProps)(withImmutablePropsToJS(Board));

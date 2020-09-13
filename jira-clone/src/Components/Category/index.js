@@ -10,8 +10,7 @@ const Category = (props) => {
     return <Paper>
         <h1>{title}</h1>
         {
-            tickets.map(ticket => {
-
+            tickets.map(ticket => { 
                 return (
                     <div>
                         <button onClick={() => dispatch({ type: "deleteTicket", ticketId: ticket.id })}>X</button>

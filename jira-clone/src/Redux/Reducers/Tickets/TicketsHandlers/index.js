@@ -1,26 +1,41 @@
 import { v4 } from "uuid";
 import * as _ from 'lodash'
+import { fromJS, List } from "immutable";
 
 export default {
     newTicket: (state, action) => {
-
-        let copy = _.cloneDeep(state)
         let ticketToAdd = {}
 
-        if (action.ticket && action.ticketStatus && state.tickets[action.ticketStatus]) {
+        if (action.ticket && action.ticketStatus && state.getIn(["tickets", action.ticketStatus])) {
             ticketToAdd["id"] = v4()
             ticketToAdd["content"] = action.ticket
-            copy.tickets[action.ticketStatus].push(ticketToAdd)
         }
-        return { ...copy, ticketToAdd }
+
+        return state.updateIn(["tickets", action.ticketStatus], List(), list => list.push(fromJS(ticketToAdd)))
+
     },
 
     deleteTicket: (state, action) => {
+
         if (action.ticketId) {
-            for (let key of Object.keys(state.tickets)) {
-                state.tickets[key] = state.tickets[key].filter((value, index, arr) => { return value.id != action.ticketId })
-            }
+            return state.updateIn(
+                ["tickets"],
+                List(),
+                list => {
+                    let updatedTickets = Object.fromEntries(
+                        Object.entries(list.toJS()).map(([key, categoryTickets]) =>
+                            [
+                                key, categoryTickets.filter((ticket) => {
+                                    return ticket['id'] != action.ticketId;
+                                })
+                            ]
+                        )
+                    )
+                    return fromJS(updatedTickets)
+                })
         }
-        return { ...state }
+
+        return state
+
     }
 }

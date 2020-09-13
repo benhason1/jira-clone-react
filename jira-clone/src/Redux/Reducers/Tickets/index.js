@@ -1,6 +1,7 @@
 import reducerFactory from '../../ReducerFactory';
 import TicketsHandlers from './TicketsHandlers';
 import Configuration from '../../../Configuration';
+import {fromJS} from 'immutable'
 
 const actions = {
     NEW: 'newTicket',
@@ -11,4 +12,4 @@ const handlers = {}
 handlers[actions.NEW] = TicketsHandlers.newTicket
 handlers[actions.DElETE] = TicketsHandlers.deleteTicket
 
-export default reducerFactory(Configuration.reduxTicketInitialState, handlers)
+export default reducerFactory(fromJS(Configuration.reduxTicketInitialState), handlers)

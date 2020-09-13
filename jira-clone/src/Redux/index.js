@@ -7,4 +7,4 @@ const reducers = combineReducers({
     Users: UserReducer
 })
 
-export default reducers
+export default TicketReducer

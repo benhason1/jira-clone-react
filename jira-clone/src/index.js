@@ -13,11 +13,11 @@ const store = createStore(reducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
-  // store.dispatch({
-  //   type: "newTicket",
-  //   ticket: new Ticket("ben", "running", "you need to run", ["asd", "sad"]),
-  //   ticketStatus: "backlog"
-  // })
+store.dispatch({
+  type: "newTicket",
+  ticket: new Ticket("ben", "running", "you need to run", ["asd", "sad"]),
+  ticketStatus: "inProgress"
+})
 
 
 ReactDOM.render(
