@@ -4,8 +4,6 @@ import { fromJS, List } from "immutable";
 
 export default {
     newTicket: (state, action) => {
-
-        // let copy = _.cloneDeep(state)
         let ticketToAdd = {}
 
         if (action.ticket && action.ticketStatus && state.getIn(["tickets", action.ticketStatus])) {
@@ -13,19 +11,18 @@ export default {
             ticketToAdd["content"] = action.ticket
         }
 
-        return state.updateIn(["tickets", "backlog"], List(), list => list.push(fromJS(ticketToAdd)))
+        return state.updateIn(["tickets", action.ticketStatus], List(), list => list.push(fromJS(ticketToAdd)))
 
     },
 
     deleteTicket: (state, action) => {
 
         if (action.ticketId) {
-            debugger
             return state.updateIn(
                 ["tickets"],
                 List(),
                 list => {
-                    let x = Object.fromEntries(
+                    let ticketsAfterRemove = Object.fromEntries(
                         Object.entries(list.toJS()).map(([key, categoryTickets]) =>
                             [
                                 key, categoryTickets.filter((ticket) => {
@@ -34,12 +31,40 @@ export default {
                             ]
                         )
                     )
-                    console.log(x)
-                    return fromJS(x)
+                    return fromJS(ticketsAfterRemove)
                 })
         }
 
         return state
+
+    },
+
+    updateTicket: (state, action) => {
+        if (!action.ticketId || !action.newState) {
+            return state;
+        }
+        return state.updateIn(
+            ["tickets"],
+            List(),
+            list => {
+                let ticketToUpdate = null;
+                let ticketsAfterRemove = Object.fromEntries(
+                    Object.entries(list.toJS()).map(([key, categoryTickets]) =>
+                        [
+                            key, categoryTickets.filter((ticket) => {
+                                if (ticket['id'] == action.ticketId) {
+                                    ticketToUpdate = ticket
+                                }
+
+                                return ticket['id'] != action.ticketId;
+                            })
+                        ]
+                    )
+                )
+                if (ticketToUpdate)
+                    ticketsAfterRemove[action.newState].push(ticketToUpdate)
+                return fromJS(ticketsAfterRemove)
+            })
 
     }
 }
