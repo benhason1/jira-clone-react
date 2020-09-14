@@ -21,9 +21,9 @@ const Board = (props) => {
 
 const mapStateToProps = state => {
     return {
-        backlog: state.getIn(["tickets", "backlog"]),
-        inProgress: state.getIn(["tickets", "inProgress"]),
-        done: state.getIn(["tickets", "done"])
+        backlog: state.getIn(["Tickets","tickets", "backlog"]),
+        inProgress: state.getIn(["Tickets","tickets", "inProgress"]),
+        done: state.getIn(["Tickets","tickets", "done"])
     };
 };
 

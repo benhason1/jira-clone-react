@@ -4,6 +4,7 @@ import Ticket from '../../Components/Ticket';
 import { useDispatch } from 'react-redux'
 
 const Category = (props) => {
+    
     const { tickets, title } = props
     const dispatch = useDispatch()
 
