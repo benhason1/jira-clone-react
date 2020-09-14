@@ -15,7 +15,11 @@ const Category = (props) => {
                 return (
                     <div>
                         <button onClick={() => dispatch({ type: "deleteTicket", ticketId: ticket.id })}>X</button>
-                        <button onClick={() => dispatch({ type: "updateTicket", ticketId: ticket.id, newState: "done" })}>update</button>
+                        <button onClick={() => dispatch({ type: "updateTicket", ticketId: ticket.id, newState: "backlog" })}>backlog</button>
+                        <button onClick={() => dispatch({ type: "updateTicket", ticketId: ticket.id, newState: "inProgress" })}>inProgress</button>
+                        <button onClick={() => dispatch({ type: "updateTicket", ticketId: ticket.id, newState: "done" })}>done</button>
+
+
                     <Ticket creator={ticket.content.creatorId} title={ticket.content.title} content={ticket.content.content} allowedUsers={ticket.content.allowedUsers}></Ticket>
                     </div>
                 )
